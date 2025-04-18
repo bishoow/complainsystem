@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Complaint {
+  id            String   @id @default(cuid())
+  complaintId   String   @unique // User-facing ID (e.g., ABC123)
+  fullName      String
+  idNumber      String
+  email         String
+  phone         String
+  address       String
+  department    String
+  complaintType String
+  subject       String
+  description   String
+  location      String
+  priority      String
+  status        String   @default("pending") // pending, in-progress, resolved, rejected
+  submittedDate DateTime @default(now())
+  lastUpdated   DateTime @default(now()) @updatedAt
+  timeline      Timeline[]
+}
+
+model Timeline {
+  id          Int       @id @default(autoincrement())
+  date        DateTime  @default(now())
+  status      String
+  description String
+  complaint   Complaint @relation(fields: [complaintId], references: [id], onDelete: Cascade)
+  complaintId String
+}
