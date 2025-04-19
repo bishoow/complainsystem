@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ArrowLeft, BarChart3, PieChart, TrendingUp, Download } from "lucide-react"
+import { getAllComplaints } from "@/lib/complaints-store"
 
 // Define our complaint data structure
 interface ComplaintStats {
@@ -42,115 +43,151 @@ export default function Statistics() {
   const [stats, setStats] = useState<ComplaintStats | null>(null)
   const [loading, setLoading] = useState(true)
 
-  // Simulate fetching statistics data
+  // Fetch statistics data
   useEffect(() => {
     setLoading(true)
 
     // Simulate API delay
     setTimeout(() => {
-      // Generate statistics based on timeframe
-      const data: ComplaintStats = generateStatistics(timeframe)
+      // Generate statistics based on real complaints
+      const complaints = getAllComplaints()
+      const data: ComplaintStats = generateStatistics(complaints, timeframe)
       setStats(data)
       setLoading(false)
-    }, 800)
+    }, 500)
   }, [timeframe])
 
-  // Function to generate mock statistics based on timeframe
-  const generateStatistics = (timeframe: string): ComplaintStats => {
-    // Base numbers that will be adjusted by timeframe
-    let baseTotal = 0
-    let multiplier = 1
-
-    switch (timeframe) {
-      case "week":
-        baseTotal = 320
-        multiplier = 1
-        break
-      case "month":
-        baseTotal = 1248
-        multiplier = 4
-        break
-      case "quarter":
-        baseTotal = 3750
-        multiplier = 12
-        break
-      case "year":
-        baseTotal = 15200
-        multiplier = 48
-        break
+  // Function to generate statistics based on actual complaints
+  const generateStatistics = (complaints: any[], timeframe: string): ComplaintStats => {
+    // Default values if no complaints exist
+    if (complaints.length === 0) {
+      return {
+        totalComplaints: 0,
+        resolutionRate: 0,
+        avgResolutionDays: 0,
+        byDepartment: [],
+        byCategory: [],
+        byStatus: [],
+        trend: {
+          direction: "up",
+          percentage: 0,
+        },
+      }
     }
 
-    // Department data - matches our complaint tracking system
-    const departmentData = [
-      { name: "Water Supply", count: Math.round(baseTotal * 0.26), color: "bg-blue-500" },
-      { name: "Electricity", count: Math.round(baseTotal * 0.23), color: "bg-yellow-500" },
-      { name: "Roads & Infrastructure", count: Math.round(baseTotal * 0.17), color: "bg-green-500" },
-      { name: "Sanitation & Waste", count: Math.round(baseTotal * 0.16), color: "bg-purple-500" },
-      { name: "Public Health", count: Math.round(baseTotal * 0.09), color: "bg-red-500" },
-      { name: "Public Works", count: Math.round(baseTotal * 0.05), color: "bg-orange-500" },
-      { name: "Others", count: Math.round(baseTotal * 0.04), color: "bg-slate-500" },
-    ]
+    // Count departments
+    const departmentCounts: Record<string, number> = {}
+    complaints.forEach((complaint) => {
+      departmentCounts[complaint.department] = (departmentCounts[complaint.department] || 0) + 1
+    })
+
+    const departmentData = Object.entries(departmentCounts).map(([name, count]) => ({
+      name,
+      count,
+      percentage: 0, // Will calculate below
+      color: getDepartmentColor(name),
+    }))
 
     // Calculate percentages for departments
     const totalDeptCount = departmentData.reduce((sum, dept) => sum + dept.count, 0)
     const departmentsWithPercentage = departmentData.map((dept) => ({
       ...dept,
-      percentage: Math.round((dept.count / totalDeptCount) * 100),
+      percentage: Math.round((dept.count / (totalDeptCount || 1)) * 100),
     }))
 
-    // Category data - matches our complaint form categories
-    const categoryData = [
-      { name: "Service Not Available", count: Math.round(baseTotal * 0.29), color: "bg-blue-500" },
-      { name: "Poor Quality of Service", count: Math.round(baseTotal * 0.24), color: "bg-yellow-500" },
-      { name: "Delay in Service", count: Math.round(baseTotal * 0.18), color: "bg-green-500" },
-      { name: "Staff Behavior", count: Math.round(baseTotal * 0.12), color: "bg-purple-500" },
-      { name: "Infrastructure Issue", count: Math.round(baseTotal * 0.1), color: "bg-red-500" },
-      { name: "Others", count: Math.round(baseTotal * 0.07), color: "bg-slate-500" },
-    ]
+    // Count categories
+    const categoryCounts: Record<string, number> = {}
+    complaints.forEach((complaint) => {
+      categoryCounts[complaint.complaintType] = (categoryCounts[complaint.complaintType] || 0) + 1
+    })
+
+    const categoryData = Object.entries(categoryCounts).map(([name, count]) => ({
+      name,
+      count,
+      percentage: 0, // Will calculate below
+      color: getCategoryColor(name),
+    }))
 
     // Calculate percentages for categories
     const totalCatCount = categoryData.reduce((sum, cat) => sum + cat.count, 0)
     const categoriesWithPercentage = categoryData.map((cat) => ({
       ...cat,
-      percentage: Math.round((cat.count / totalCatCount) * 100),
+      percentage: Math.round((cat.count / (totalCatCount || 1)) * 100),
     }))
 
-    // Status data - matches our complaint statuses
-    const resolvedCount = Math.round(baseTotal * 0.78)
-    const inProgressCount = Math.round(baseTotal * 0.13)
-    const pendingCount = Math.round(baseTotal * 0.07)
-    const rejectedCount = Math.round(baseTotal * 0.02)
+    // Count statuses
+    const statusCounts = {
+      resolved: 0,
+      "in-progress": 0,
+      pending: 0,
+      rejected: 0,
+    }
+
+    complaints.forEach((complaint) => {
+      statusCounts[complaint.status as keyof typeof statusCounts] += 1
+    })
 
     const statusData = [
-      { name: "Resolved", count: resolvedCount, color: "bg-green-500" },
-      { name: "In Progress", count: inProgressCount, color: "bg-blue-500" },
-      { name: "Pending Review", count: pendingCount, color: "bg-amber-500" },
-      { name: "Rejected", count: rejectedCount, color: "bg-red-500" },
+      { name: "Resolved", count: statusCounts.resolved, color: "bg-green-500" },
+      { name: "In Progress", count: statusCounts["in-progress"], color: "bg-blue-500" },
+      { name: "Pending Review", count: statusCounts.pending, color: "bg-amber-500" },
+      { name: "Rejected", count: statusCounts.rejected, color: "bg-red-500" },
     ]
 
     // Calculate percentages for statuses
     const totalStatusCount = statusData.reduce((sum, status) => sum + status.count, 0)
     const statusesWithPercentage = statusData.map((status) => ({
       ...status,
-      percentage: Math.round((status.count / totalStatusCount) * 100),
+      percentage: Math.round((status.count / (totalStatusCount || 1)) * 100),
     }))
 
-    // Generate random trend data
-    const trendDirection = Math.random() > 0.3 ? "up" : ("down" as "up" | "down")
-    const trendPercentage = Math.floor(Math.random() * 15) + 1
+    // Calculate resolution rate
+    const resolvedCount = statusCounts.resolved
+    const resolutionRate = Math.round((resolvedCount / (totalStatusCount || 1)) * 100)
 
     return {
-      totalComplaints: baseTotal,
-      resolutionRate: 78,
-      avgResolutionDays: 5.2,
+      totalComplaints: complaints.length,
+      resolutionRate,
+      avgResolutionDays: 5.2, // This would be calculated from actual data in a real system
       byDepartment: departmentsWithPercentage,
       byCategory: categoriesWithPercentage,
       byStatus: statusesWithPercentage,
       trend: {
-        direction: trendDirection,
-        percentage: trendPercentage,
+        direction: "up",
+        percentage: 5,
       },
     }
+  }
+
+  // Helper function to get consistent colors for departments
+  const getDepartmentColor = (department: string): string => {
+    const colorMap: Record<string, string> = {
+      "Water Supply": "bg-blue-500",
+      Electricity: "bg-yellow-500",
+      "Roads & Infrastructure": "bg-green-500",
+      "Sanitation & Waste": "bg-purple-500",
+      "Public Health": "bg-red-500",
+      Education: "bg-orange-500",
+      "Public Transport": "bg-indigo-500",
+      Other: "bg-slate-500",
+    }
+
+    return colorMap[department] || "bg-slate-500"
+  }
+
+  // Helper function to get consistent colors for categories
+  const getCategoryColor = (category: string): string => {
+    const colorMap: Record<string, string> = {
+      "Service Not Available": "bg-blue-500",
+      "Poor Quality of Service": "bg-yellow-500",
+      "Delay in Service": "bg-green-500",
+      "Staff Behavior": "bg-purple-500",
+      Corruption: "bg-red-500",
+      "Infrastructure Issue": "bg-orange-500",
+      Other: "bg-slate-500",
+    }
+
+    return colorMap[category] || "bg-slate-500"
   }
 
   return (

@@ -37,6 +37,13 @@ export default function SubmitComplaint() {
   const [previewImages, setPreviewImages] = useState<{ file: File; preview: string }[]>([])
   const fileInputRef = useRef<HTMLInputElement>(null)
 
+  // Clean up object URLs when component unmounts
+  useEffect(() => {
+    return () => {
+      previewImages.forEach((image) => URL.revokeObjectURL(image.preview))
+    }
+  }, [previewImages])
+
   const handleImageUpload = (files: File[]) => {
     // Limit to 5 photos total
     const remainingSlots = 5 - previewImages.length
@@ -64,19 +71,11 @@ export default function SubmitComplaint() {
   const removeImage = (index: number) => {
     setPreviewImages((prev) => {
       const newImages = [...prev]
-      // Revoke the object URL to avoid memory leaks
       URL.revokeObjectURL(newImages[index].preview)
       newImages.splice(index, 1)
       return newImages
     })
   }
-
-  // Clean up object URLs when component unmounts
-  useEffect(() => {
-    return () => {
-      previewImages.forEach((image) => URL.revokeObjectURL(image.preview))
-    }
-  }, [previewImages])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target
@@ -94,17 +93,6 @@ export default function SubmitComplaint() {
     try {
       // Add the complaint to our in-memory store
       const complaintId = addComplaint(formData)
-
-      // Log the photos that would be uploaded in a real implementation
-      if (previewImages.length > 0) {
-        console.log(
-          `${previewImages.length} photos would be uploaded:`,
-          previewImages.map((img) => ({ name: img.file.name, size: img.file.size })),
-        )
-
-        // In a real implementation, you would upload these files to a storage service
-        // and store the URLs in your database along with the complaint
-      }
 
       toast.success("Complaint Submitted Successfully", {
         description: `Your complaint has been registered with ID: ${complaintId}`,
@@ -135,6 +123,7 @@ export default function SubmitComplaint() {
         </CardHeader>
         <form onSubmit={handleSubmit}>
           <CardContent className="space-y-6 pt-6">
+            {/* Personal Information section */}
             <div className="space-y-4">
               <h3 className="text-lg font-medium">Personal Information</h3>
 
@@ -197,6 +186,7 @@ export default function SubmitComplaint() {
               </div>
             </div>
 
+            {/* Complaint Details section */}
             <div className="space-y-4">
               <h3 className="text-lg font-medium">Complaint Details</h3>
 
@@ -278,6 +268,34 @@ export default function SubmitComplaint() {
                   required
                 />
               </div>
+
+              <div className="space-y-2">
+                <Label>Priority Level</Label>
+                <RadioGroup
+                  defaultValue={formData.priority}
+                  onValueChange={(value) => handleSelectChange("priority", value)}
+                >
+                  <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4">
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="low" id="low" />
+                      <Label htmlFor="low">Low</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="medium" id="medium" />
+                      <Label htmlFor="medium">Medium</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="high" id="high" />
+                      <Label htmlFor="high">High</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="urgent" id="urgent" />
+                      <Label htmlFor="urgent">Urgent</Label>
+                    </div>
+                  </div>
+                </RadioGroup>
+              </div>
+
               <div className="space-y-2">
                 <Label>Supporting Photos</Label>
                 <div

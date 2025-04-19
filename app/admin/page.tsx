@@ -1,22 +1,15 @@
- {/* "use client"
+"use client"
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-//import { ArrowLeft, Clock, CheckCircle, AlertCircle, XCircle } from "lucide-react"
-//import { toast } from "sonner"
+import { ArrowLeft, Clock, CheckCircle, AlertCircle, XCircle } from "lucide-react"
 import { getAllComplaints, type Complaint } from "@/lib/complaints-store"
-import { ArrowLeft } from "lucide-react"
 
 export default function AdminPage() {
   const [complaints, setComplaints] = useState<Complaint[]>([])
   const [loading, setLoading] = useState(true)
-  //const [selectedComplaint, setSelectedComplaint] = useState<Complaint | null>(null)
- // const [updateStatus] = useState<"pending" | "in-progress" | "resolved" | "rejected">("in-progress")
-  //const [updateDescription] = useState("")
-  //const [searchTerm] = useState("")
- // const [filterStatus] = useState("all")
 
   useEffect(() => {
     fetchComplaints()
@@ -32,37 +25,6 @@ export default function AdminPage() {
       console.error("Error fetching complaints:", error)
     } finally {
       setLoading(false)
-    }
-  }
-
-  const handleUpdateStatus = async () => {
-    if (!selectedComplaint) return
-
-    try {
-      const response = await fetch("/api/admin/complaints", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: selectedComplaint.id,
-          status: updateStatus,
-          description: updateDescription,
-        }),
-      })
-
-      const data = await response.json()
-
-      if (data.success) {
-        toast.success("Complaint status updated successfully")
-        fetchComplaints()
-        setSelectedComplaint(null)
-      } else {
-        throw new Error(data.error || "Failed to update complaint")
-      }
-    } catch (error) {
-      console.error("Error updating complaint:", error)
-      toast.error("Failed to update complaint status")
     }
   }
 
@@ -96,19 +58,6 @@ export default function AdminPage() {
     }
   }
 
-  const filteredComplaints = complaints.filter((complaint) => {
-    const matchesSearch =
-      searchTerm === "" ||
-      complaint.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      complaint.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      complaint.fullName.toLowerCase().includes(searchTerm.toLowerCase())
-
-    const matchesStatus = filterStatus === "all" || complaint.status === filterStatus
-
-    return matchesSearch && matchesStatus
-  })
- 
-
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-6">
@@ -135,7 +84,10 @@ export default function AdminPage() {
                 <div key={complaint.id} className="border p-4 rounded-md">
                   <div className="flex justify-between">
                     <h3 className="font-medium">{complaint.subject}</h3>
-                    <span className="text-sm">{complaint.status}</span>
+                    <div className="flex items-center gap-2">
+                      {getStatusIcon(complaint.status)}
+                      <span>{getStatusText(complaint.status)}</span>
+                    </div>
                   </div>
                   <p className="text-sm text-slate-500">ID: {complaint.id}</p>
                   <p className="text-sm text-slate-500">Department: {complaint.department}</p>
@@ -154,4 +106,3 @@ export default function AdminPage() {
     </div>
   )
 }
- */}

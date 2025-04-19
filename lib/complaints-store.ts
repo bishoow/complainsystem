@@ -1,3 +1,6 @@
+// Remove the sample complaints function and initialization since they're not needed in production
+// Keep only the essential functions
+
 // This is a simple in-memory store for complaints
 // In a production environment, you would use a database
 
@@ -27,7 +30,7 @@ export interface Complaint {
 }
 
 // In-memory store for complaints
-let complaints: Complaint[] = []
+const complaints: Complaint[] = []
 
 // Generate a random complaint ID (e.g., ABC123)
 export function generateComplaintId() {
@@ -114,74 +117,3 @@ export function updateComplaintStatus(
 
   return true
 }
-
-// For testing: Add some sample complaints
-export function addSampleComplaints() {
-  if (complaints.length === 0) {
-    const sampleComplaints = [
-      {
-        id: "ABC123",
-        fullName: "John Doe",
-        idNumber: "ID12345678",
-        email: "john@example.com",
-        phone: "1234567890",
-        address: "123 Main St, City",
-        department: "Water Supply",
-        complaintType: "Service Not Available",
-        subject: "Water supply interruption in Sector 7",
-        description: "No water supply for the last 3 days in Sector 7 area.",
-        location: "Sector 7",
-        priority: "high",
-        status: "in-progress" as const,
-        submittedDate: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-        lastUpdated: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-        timeline: [
-          {
-            date: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-            status: "Submitted",
-            description: "Complaint received and registered in the system",
-          },
-          {
-            date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-            status: "Under Review",
-            description: "Complaint assigned to Water Department for initial assessment",
-          },
-          {
-            date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-            status: "In Progress",
-            description: "Field team dispatched to investigate the issue",
-          },
-        ],
-      },
-      {
-        id: "DEF456",
-        fullName: "Jane Smith",
-        idNumber: "ID87654321",
-        email: "jane@example.com",
-        phone: "9876543210",
-        address: "456 Park Ave, City",
-        department: "Electricity",
-        complaintType: "Infrastructure Issue",
-        subject: "Street light malfunction on Main Road",
-        description: "Street lights not working on Main Road causing safety concerns.",
-        location: "Main Road",
-        priority: "medium",
-        status: "pending" as const,
-        submittedDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-        lastUpdated: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-        timeline: [
-          {
-            date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-            status: "Submitted",
-            description: "Complaint received and registered in the system",
-          },
-        ],
-      },
-    ]
-
-    complaints = sampleComplaints
-  }
-}
-
-// Initialize with sample data
-addSampleComplaints()
