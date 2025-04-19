@@ -4,18 +4,18 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowLeft, Clock, CheckCircle, AlertCircle, XCircle } from "lucide-react"
-import { toast } from "sonner"
+//import { ArrowLeft, Clock, CheckCircle, AlertCircle, XCircle } from "lucide-react"
+//import { toast } from "sonner"
 import { getAllComplaints, type Complaint } from "@/lib/complaints-store"
 
 export default function AdminPage() {
   const [complaints, setComplaints] = useState<Complaint[]>([])
   const [loading, setLoading] = useState(true)
-  const [selectedComplaint, setSelectedComplaint] = useState<Complaint | null>(null)
-  const [updateStatus] = useState<"pending" | "in-progress" | "resolved" | "rejected">("in-progress")
-  const [updateDescription] = useState("")
-  const [searchTerm] = useState("")
-  const [filterStatus] = useState("all")
+  //const [selectedComplaint, setSelectedComplaint] = useState<Complaint | null>(null)
+ // const [updateStatus] = useState<"pending" | "in-progress" | "resolved" | "rejected">("in-progress")
+  //const [updateDescription] = useState("")
+  //const [searchTerm] = useState("")
+ // const [filterStatus] = useState("all")
 
   useEffect(() => {
     fetchComplaints()
