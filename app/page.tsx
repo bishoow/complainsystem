@@ -33,10 +33,7 @@ export default function Home() {
       alt="Nepali Flag"
       style={{ width: "60px", height: "auto" }}
     />
-    <div className="text-sm text-gray-600">
-      <span id="DATE_IN_NEPALI">२०८२ बैशाख ५, शुक्रबार</span> <br />
-      <span id="TIME_IN_NEPALI">२२:०२:१०</span>
-    </div>
+   
   </div>
 </div>
 

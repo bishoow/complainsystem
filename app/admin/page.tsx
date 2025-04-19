@@ -12,10 +12,10 @@ export default function AdminPage() {
   const [complaints, setComplaints] = useState<Complaint[]>([])
   const [loading, setLoading] = useState(true)
   const [selectedComplaint, setSelectedComplaint] = useState<Complaint | null>(null)
-  const [updateStatus, setUpdateStatus] = useState<"pending" | "in-progress" | "resolved" | "rejected">("in-progress")
-  const [updateDescription, setUpdateDescription] = useState("")
-  const [searchTerm, setSearchTerm] = useState("")
-  const [filterStatus, setFilterStatus] = useState("all")
+  const [updateStatus] = useState<"pending" | "in-progress" | "resolved" | "rejected">("in-progress")
+  const [updateDescription] = useState("")
+  const [searchTerm] = useState("")
+  const [filterStatus] = useState("all")
 
   useEffect(() => {
     fetchComplaints()

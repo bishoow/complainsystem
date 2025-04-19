@@ -278,34 +278,6 @@ export default function SubmitComplaint() {
                   required
                 />
               </div>
-
-              <div className="space-y-2">
-                <Label>Priority Level</Label>
-                <RadioGroup
-                  defaultValue={formData.priority}
-                  onValueChange={(value) => handleSelectChange("priority", value)}
-                >
-                  <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4">
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="low" id="low" />
-                      <Label htmlFor="low">Low</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="medium" id="medium" />
-                      <Label htmlFor="medium">Medium</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="high" id="high" />
-                      <Label htmlFor="high">High</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="urgent" id="urgent" />
-                      <Label htmlFor="urgent">Urgent</Label>
-                    </div>
-                  </div>
-                </RadioGroup>
-              </div>
-
               <div className="space-y-2">
                 <Label>Supporting Photos</Label>
                 <div
