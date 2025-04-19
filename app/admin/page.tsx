@@ -1,4 +1,4 @@
-"use client"
+ {/* "use client"
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
@@ -34,7 +34,7 @@ export default function AdminPage() {
       setLoading(false)
     }
   }
- {/* 
+
   const handleUpdateStatus = async () => {
     if (!selectedComplaint) return
 
@@ -107,7 +107,7 @@ export default function AdminPage() {
 
     return matchesSearch && matchesStatus
   })
-  */}
+ 
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -154,3 +154,4 @@ export default function AdminPage() {
     </div>
   )
 }
+ */}
