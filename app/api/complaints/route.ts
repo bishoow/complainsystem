@@ -1,12 +1,12 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { addComplaint, generateComplaintId } from "@/lib/complaints-store"
+import { addComplaint} from "@/lib/complaints-store"
 
 export async function POST(request: NextRequest) {
   try {
     const data = await request.json()
 
     // Generate a unique complaint ID (e.g., ABC123)
-    const complaintId = generateComplaintId()
+   // const complaintId = generateComplaintId()
 
     // Create the complaint in our in-memory store
     const id = addComplaint({

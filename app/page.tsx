@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { ChevronRight, FileText, BarChart3, Clock } from "lucide-react"
+import Image from 'next/image';
 
 export default function Home() {
   return (
@@ -10,13 +11,17 @@ export default function Home() {
      {/* Nepali Government Header */}
 <div className="flex justify-between items-center py-4 border-b border-gray-300 mb-8">
   {/* Left: Government Emblem */}
-  <div className="flex-shrink-0">
-    <img
-      src="https://upload.wikimedia.org/wikipedia/commons/2/23/Emblem_of_Nepal.svg"
-      alt="Government of Nepal Emblem"
-      style={{ width: "90px", height: "80px" }}
-    />
-  </div>
+ 
+
+<div className="flex-shrink-0">
+  <Image
+    src="/images/Emblem_of_Nepal.svg"
+    alt="Government of Nepal Emblem"
+    width={90}
+    height={80}
+  />
+</div>
+
 
   {/* Center: Text in Nepali */}
   <div className="text-center">
@@ -29,11 +34,11 @@ export default function Home() {
   {/* Right: Nepali Flag and Date/Time */}
   <div className="text-right flex flex-col items-end gap-1">
     <img
-      src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhp8Tmdtl-RZ_-JLc-y9y88jsCZhaDW-TKuEGDlxGFDVLaUsHVQv_Og-7yX9vEoJtF8LGHbNqvYZFFeXCbuOCWuoP11RqfZLWsY8eOZW9eJL2NNpdw8BHJ7NvCeK3pxPCCnYoBEX43g-PY/s1600/Flag_of_Nepal.gif"
+      src="/images/Flag_of_Nepal.gif"
       alt="Nepali Flag"
       style={{ width: "60px", height: "auto" }}
     />
-   
+
   </div>
 </div>
 
