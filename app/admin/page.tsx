@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 //import { ArrowLeft, Clock, CheckCircle, AlertCircle, XCircle } from "lucide-react"
 //import { toast } from "sonner"
 import { getAllComplaints, type Complaint } from "@/lib/complaints-store"
+import { ArrowLeft } from "lucide-react"
 
 export default function AdminPage() {
   const [complaints, setComplaints] = useState<Complaint[]>([])
