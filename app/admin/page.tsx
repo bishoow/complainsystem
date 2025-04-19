@@ -33,7 +33,7 @@ export default function AdminPage() {
       setLoading(false)
     }
   }
-
+ {/* 
   const handleUpdateStatus = async () => {
     if (!selectedComplaint) return
 
@@ -106,6 +106,7 @@ export default function AdminPage() {
 
     return matchesSearch && matchesStatus
   })
+  */}
 
   return (
     <div className="container mx-auto px-4 py-8">
