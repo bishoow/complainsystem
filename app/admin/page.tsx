@@ -18,7 +18,6 @@ export default function AdminPage() {
   const fetchComplaints = async () => {
     setLoading(true)
     try {
-      // Get complaints directly from the store
       const allComplaints = getAllComplaints()
       setComplaints(allComplaints)
     } catch (error) {
