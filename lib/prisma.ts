@@ -8,20 +8,21 @@ import {
   getAllComplaints,
   updateComplaintStatus,
   generateComplaintId,
-  NewComplaintInput, // ✅ Import the correct type
-  ComplaintStatus,   // ✅ Import this to restrict valid status values
+  NewComplaintInput,
+  ComplaintStatus,
+  Complaint, // 👈 needed for return types
 } from "./complaints-store"
 
 export { addComplaint, getComplaintById, getAllComplaints, updateComplaintStatus, generateComplaintId }
 
 interface CreateInput {
-  data: NewComplaintInput // ✅ USE the actual expected type from complaints-store.ts
+  data: NewComplaintInput
 }
 
 interface UpdateInput {
   data: {
     id: string
-    status: ComplaintStatus // ✅ Limit to accepted strings
+    status: ComplaintStatus
     description: string
   }
 }
@@ -35,17 +36,30 @@ interface FindUniqueInput {
 // Export a dummy object for any code that might be using prisma directly
 export const prisma = {
   complaint: {
-    create: async (data: CreateInput) => {
+    create: async (data: CreateInput): Promise<Complaint> => {
       const id = addComplaint(data.data)
-      return { id, complaintId: id, ...data.data }
+      return {
+        id,
+        status: "pending",
+        submittedDate: new Date().toISOString(),
+        lastUpdated: new Date().toISOString(),
+        timeline: [
+          {
+            date: new Date().toISOString(),
+            status: "Submitted",
+            description: "Complaint received and registered in the system",
+          },
+        ],
+        ...data.data,
+      }
     },
-    findUnique: async (query: FindUniqueInput) => {
+    findUnique: async (query: FindUniqueInput): Promise<Complaint | undefined> => {
       return getComplaintById(query.where.complaintId)
     },
-    findMany: async () => {
+    findMany: async (): Promise<Complaint[]> => {
       return getAllComplaints()
     },
-    update: async (query: UpdateInput) => {
+    update: async (query: UpdateInput): Promise<Complaint | undefined> => {
       const { id, status, description } = query.data
       updateComplaintStatus(id, status, description)
       return getComplaintById(id)

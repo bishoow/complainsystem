@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { ChevronRight, FileText, Clock } from "lucide-react"
+import { ChevronRight, FileText, Clock, BarChart3 } from "lucide-react"
 import Image from 'next/image';
 
 export default function Home() {
@@ -93,7 +93,7 @@ export default function Home() {
           </CardContent>
         </Card>
 
-        {/* Complaint Statistics Card 
+        {/* Complaint Statistics Card */}
         <Card className="shadow-md">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
@@ -112,7 +112,7 @@ export default function Home() {
             </Button>
           </CardContent>
         </Card>
-        */}
+        
       </div>
     
 
