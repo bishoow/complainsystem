@@ -1,37 +1,28 @@
 import { NextResponse } from "next/server"
-import { getAllComplaints, updateComplaintStatus } from "@/lib/complaints-store"
 
-export async function GET() {
-  try {
-    const complaints = getAllComplaints()
-    return NextResponse.json({ success: true, complaints })
-  } catch (error) {
-    console.error("Error fetching complaints:", error)
-    return NextResponse.json({ success: false, error: "Failed to fetch complaints" }, { status: 500 })
+// Example of handling a GET request to fetch a complaint by ID
+export async function GET(request: Request, { params }: { params: { id: string } }) {
+  const id = params.id
+  // TODO: Fetch the complaint from your data source based on the ID
+  const complaint = { id: id, title: "Example Complaint", description: "This is an example complaint." }
+
+  if (!complaint) {
+    return new NextResponse("Complaint not found", { status: 404 })
   }
+
+  return NextResponse.json(complaint)
 }
 
-export async function PUT(request: Request) {
-  try {
-    const data = await request.json()
-    const { id, status, description } = data
+// Example of handling a PUT request to update a complaint
+export async function PUT(request: Request, { params }: { params: { id: string } }) {
+  const id = params.id
+  // TODO: Implement the logic to update the complaint in your data source
+  return new NextResponse(`Complaint ${id} updated successfully`)
+}
 
-    if (!id || !status || !description) {
-      return NextResponse.json(
-        { success: false, error: "Missing required fields: id, status, description" },
-        { status: 400 },
-      )
-    }
-
-    const updated = updateComplaintStatus(id, status, description)
-
-    if (!updated) {
-      return NextResponse.json({ success: false, error: "Complaint not found" }, { status: 404 })
-    }
-
-    return NextResponse.json({ success: true })
-  } catch (error) {
-    console.error("Error updating complaint:", error)
-    return NextResponse.json({ success: false, error: "Failed to update complaint" }, { status: 500 })
-  }
+// Example of handling a DELETE request to delete a complaint
+export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+  const id = params.id
+  // TODO: Implement the logic to delete the complaint from your data source
+  return new NextResponse(`Complaint ${id} deleted successfully`)
 }
