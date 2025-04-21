@@ -93,7 +93,7 @@ export default function Home() {
           </CardContent>
         </Card>
 
-        {/* Complaint Statistics Card */}
+        {/* Complaint Statistics Card 
         <Card className="shadow-md">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
@@ -112,7 +112,9 @@ export default function Home() {
             </Button>
           </CardContent>
         </Card>
+        */}
       </div>
+    
 
       {/* How It Works Section */}
       <div className="bg-slate-50 p-6 rounded-lg shadow-sm mb-8">
