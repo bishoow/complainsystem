@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { ChevronRight, FileText, BarChart3, Clock } from "lucide-react"
+import { ChevronRight, FileText, Clock } from "lucide-react"
 import Image from 'next/image';
 
 export default function Home() {
