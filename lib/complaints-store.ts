@@ -1,14 +1,13 @@
-// Remove the sample complaints function and initialization since they're not needed in production
-// Keep only the essential functions
-
 // This is a simple in-memory store for complaints
 // In a production environment, you would use a database
 
-interface TimelineItem {
+export interface TimelineItem {
   date: string
   status: string
   description: string
 }
+
+export type ComplaintStatus = "pending" | "in-progress" | "resolved" | "rejected"
 
 export interface Complaint {
   id: string
@@ -23,20 +22,22 @@ export interface Complaint {
   description: string
   location: string
   priority: string
-  status: "pending" | "in-progress" | "resolved" | "rejected"
+  status: ComplaintStatus
   submittedDate: string
   lastUpdated: string
   timeline: TimelineItem[]
 }
 
+// Define the input type expected by addComplaint (excluding auto-generated fields)
+export type NewComplaintInput = Omit<Complaint, "id" | "status" | "submittedDate" | "lastUpdated" | "timeline">
+
 // In-memory store for complaints
 const complaints: Complaint[] = []
 
 // Generate a random complaint ID (e.g., ABC123)
-export function generateComplaintId() {
+export function generateComplaintId(): string {
   const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
   const numbers = "0123456789"
-
   let id = ""
 
   // Add 3 random letters
@@ -53,9 +54,7 @@ export function generateComplaintId() {
 }
 
 // Add a new complaint
-export function addComplaint(
-  complaintData: Omit<Complaint, "id" | "status" | "submittedDate" | "lastUpdated" | "timeline">,
-): string {
+export function addComplaint(complaintData: NewComplaintInput): string {
   const now = new Date().toISOString()
   const id = generateComplaintId()
 
@@ -91,7 +90,7 @@ export function getAllComplaints(): Complaint[] {
 // Update a complaint's status
 export function updateComplaintStatus(
   id: string,
-  status: "pending" | "in-progress" | "resolved" | "rejected",
+  status: ComplaintStatus,
   description: string,
 ): boolean {
   const complaint = complaints.find((c) => c.id === id)
@@ -108,10 +107,10 @@ export function updateComplaintStatus(
       status === "in-progress"
         ? "In Progress"
         : status === "resolved"
-          ? "Resolved"
-          : status === "rejected"
-            ? "Rejected"
-            : "Pending Review",
+        ? "Resolved"
+        : status === "rejected"
+        ? "Rejected"
+        : "Pending Review",
     description,
   })
 
