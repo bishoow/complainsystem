@@ -1,17 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { addComplaint} from "@/lib/complaints-store"
-export type ComplaintStatus = 'pending' | 'in-progress' | 'resolved' | 'rejected';
-
-export interface Complaint {
-  id: string;
-  description: string;
-  status: ComplaintStatus;
-  submittedDate: string;
-  lastUpdated: string;
-  timeline: string[];
-  // etc.
-}
-
 
 export async function POST(request: NextRequest) {
   try {
@@ -36,7 +24,6 @@ export async function POST(request: NextRequest) {
       location: data.location || "",
       priority: data.priority || "medium",
     })
-    
 
     return NextResponse.json({
       success: true,
