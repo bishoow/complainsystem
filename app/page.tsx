@@ -1,13 +1,12 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { ChevronRight, FileText, Clock, BarChart3 } from "lucide-react"
+import { ChevronRight, FileText, Clock } from "lucide-react"
 import Image from 'next/image';
 
 export default function Home() {
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* Nepali Government Header */}
      {/* Nepali Government Header */}
 <div className="flex justify-between items-center py-4 border-b border-gray-300 mb-8">
   {/* Left: Government Emblem */}
@@ -45,14 +44,14 @@ export default function Home() {
       {/* Portal Main Content */}
       <header className="mb-8">
         <div className="bg-slate-800 text-white p-6 rounded-lg shadow-md">
-          <h1 className="text-3xl font-bold">Citizen Complaint Portal</h1>
+          <h1 className="text-3xl font-bold">JanSewa Voice</h1>
           <p className="mt-2 text-slate-200">
             A platform for citizens to report issues with government services
           </p>
         </div>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-15">
         {/* Submit a Complaint Card */}
         <Card className="shadow-md">
           <CardContent className="p-6">
@@ -92,30 +91,7 @@ export default function Home() {
             </Button>
           </CardContent>
         </Card>
-
-        {/* Complaint Statistics Card */}
-        <Card className="shadow-md">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="text-lg font-medium">Complaint Statistics</h3>
-                <p className="text-sm text-muted-foreground mt-1">
-                  View public data on complaint resolution
-                </p>
-              </div>
-              <BarChart3 className="h-8 w-8 text-slate-600" />
-            </div>
-            <Button asChild className="w-full mt-4 bg-slate-800 hover:bg-slate-700">
-              <Link href="/statistics">
-                View Statistics <ChevronRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          </CardContent>
-        </Card>
-        
       </div>
-    
-
       {/* How It Works Section */}
       <div className="bg-slate-50 p-6 rounded-lg shadow-sm mb-8">
         <h2 className="text-xl font-semibold mb-4">How It Works</h2>

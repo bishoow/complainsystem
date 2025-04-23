@@ -29,6 +29,8 @@ export default function SubmitComplaint() {
     department: "",
     complaintType: "",
     subject: "",
+    colour: "",
+    liscenceno:"",
     description: "",
     location: "",
     priority: "medium",
@@ -139,15 +141,16 @@ export default function SubmitComplaint() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="idNumber">ID Number</Label>
+                  <Label htmlFor="phone">Phone Number</Label>
                   <Input
-                    id="idNumber"
-                    placeholder="National ID / Passport Number"
-                    value={formData.idNumber}
+                    id="phone"
+                    placeholder="Your contact number"
+                    value={formData.phone}
                     onChange={handleChange}
                     required
                   />
                 </div>
+                
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -158,16 +161,6 @@ export default function SubmitComplaint() {
                     type="email"
                     placeholder="your@email.com"
                     value={formData.email}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="phone">Phone Number</Label>
-                  <Input
-                    id="phone"
-                    placeholder="Your contact number"
-                    value={formData.phone}
                     onChange={handleChange}
                     required
                   />
@@ -188,10 +181,10 @@ export default function SubmitComplaint() {
 
             {/* Complaint Details section */}
             <div className="space-y-4">
-              <h3 className="text-lg font-medium">Complaint Details</h3>
+              <h3 className="text-lg font-medium">Vechicle Complaint Details</h3>
 
               <div className="space-y-2">
-                <Label htmlFor="department">Department</Label>
+                <Label htmlFor="department">Vechicle Type</Label>
                 <Select
                   required
                   value={formData.department}
@@ -201,20 +194,20 @@ export default function SubmitComplaint() {
                     <SelectValue placeholder="Select department" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Water Supply">Water Supply</SelectItem>
-                    <SelectItem value="Electricity">Electricity</SelectItem>
-                    <SelectItem value="Roads & Infrastructure">Roads & Infrastructure</SelectItem>
-                    <SelectItem value="Sanitation & Waste">Sanitation & Waste</SelectItem>
-                    <SelectItem value="Public Health">Public Health</SelectItem>
-                    <SelectItem value="Education">Education</SelectItem>
-                    <SelectItem value="Public Transport">Public Transport</SelectItem>
+                    <SelectItem value="Car">Car</SelectItem>
+                    <SelectItem value="Truck">Truck</SelectItem>
+                    <SelectItem value="Bus">Bus</SelectItem>
+                    <SelectItem value="Motercycle">Motorcycle</SelectItem>
+                    <SelectItem value="Jeep">Jeep</SelectItem>
+                    <SelectItem value="Scooter">Scooter</SelectItem>
+                    <SelectItem value="Tractor">Tractor</SelectItem>
                     <SelectItem value="Other">Other</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="complaintType">Complaint Type</Label>
+                <Label htmlFor="complaintType">Pollution Type Observed:</Label>
                 <Select
                   required
                   value={formData.complaintType}
@@ -224,27 +217,29 @@ export default function SubmitComplaint() {
                     <SelectValue placeholder="Select complaint type" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Service Not Available">Service Not Available</SelectItem>
-                    <SelectItem value="Poor Quality of Service">Poor Quality of Service</SelectItem>
-                    <SelectItem value="Delay in Service">Delay in Service</SelectItem>
+                    <SelectItem value="Service Not Available">Excessive Black Smoke</SelectItem>
+                    <SelectItem value="Poor Quality of Service">Strong Fuel Smell</SelectItem>
+                    <SelectItem value="Delay in Service">Leaking Oil</SelectItem>
                     <SelectItem value="Staff Behavior">Staff Behavior</SelectItem>
-                    <SelectItem value="Corruption">Corruption</SelectItem>
-                    <SelectItem value="Infrastructure Issue">Infrastructure Issue</SelectItem>
+                    <SelectItem value="Corruption">Noise Pollution</SelectItem>
                     <SelectItem value="Other">Other</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="subject">Subject</Label>
+                <Label htmlFor="Subject">Liscence no</Label>
                 <Input
                   id="subject"
-                  placeholder="Brief subject of your complaint"
+                  placeholder=""
                   value={formData.subject}
                   onChange={handleChange}
                   required
                 />
               </div>
+              {/*
+
+              */}
 
               <div className="space-y-2">
                 <Label htmlFor="description">Detailed Description</Label>
@@ -264,6 +259,16 @@ export default function SubmitComplaint() {
                   id="location"
                   placeholder="Where did this issue occur?"
                   value={formData.location}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="colour">Vechicle Colour</Label>
+                <Input
+                  id="colour"
+                  placeholder="Colour of the vechicle?"
+                  value={formData.colour}
                   onChange={handleChange}
                   required
                 />

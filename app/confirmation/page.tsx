@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { CheckCircle2, ArrowRight, Printer, Download } from "lucide-react"
+import { CheckCircle2, ArrowRight} from "lucide-react"
 
 export default function ConfirmationPage() {
   const searchParams = useSearchParams()
@@ -68,17 +68,6 @@ export default function ConfirmationPage() {
                 </p>
               </li>
             </ul>
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-3 pt-2">
-            <Button variant="outline" className="flex-1 gap-2">
-              <Printer className="h-4 w-4" />
-              Print Receipt
-            </Button>
-            <Button variant="outline" className="flex-1 gap-2">
-              <Download className="h-4 w-4" />
-              Download PDF
-            </Button>
           </div>
         </CardContent>
         <CardFooter className="flex flex-col sm:flex-row gap-4 justify-between border-t px-6 py-4">
