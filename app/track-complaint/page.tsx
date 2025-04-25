@@ -119,7 +119,7 @@ export default function TrackComplaint() {
       </Link>
 
       <Card className="max-w-3xl mx-auto shadow-md">
-        <CardHeader className="bg-slate-800 text-white rounded-t-lg">
+        <CardHeader  className="bg-slate-800 text-white rounded-t-lg p-6 border-4 border-blue-00 w-full max-w-3xl">
           <CardTitle>Track Your Complaint</CardTitle>
           <CardDescription className="text-slate-200">
             Enter your complaint ID to check its current status

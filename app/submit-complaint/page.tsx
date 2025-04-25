@@ -119,10 +119,13 @@ export default function SubmitComplaint() {
       </Link>
 
       <Card className="max-w-3xl mx-auto shadow-md">
-        <CardHeader className="bg-slate-800 text-white rounded-t-lg">
-          <CardTitle>Submit a Complaint</CardTitle>
-          <CardDescription className="text-slate-200">Please provide details about your complaint</CardDescription>
-        </CardHeader>
+      <CardHeader className="bg-slate-800 text-white rounded-t-lg p-6 border-4 border-blue-00 w-full max-w-3xl">
+      <CardTitle className="text-white-400">Submit a Complaint</CardTitle>
+        <CardDescription className="text-slate-200">
+          Please provide details about your complaint
+        </CardDescription>
+      </CardHeader>
+
         <form onSubmit={handleSubmit}>
           <CardContent className="space-y-6 pt-6">
             {/* Personal Information section */}
@@ -143,6 +146,7 @@ export default function SubmitComplaint() {
                 <div className="space-y-2">
                   <Label htmlFor="phone">Phone Number</Label>
                   <Input
+                  
                     id="phone"
                     placeholder="Your contact number"
                     value={formData.phone}
@@ -193,7 +197,7 @@ export default function SubmitComplaint() {
                   <SelectTrigger id="department">
                     <SelectValue placeholder="Select department" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-slate-800 text-white">
                     <SelectItem value="Car">Car</SelectItem>
                     <SelectItem value="Truck">Truck</SelectItem>
                     <SelectItem value="Bus">Bus</SelectItem>
@@ -216,7 +220,7 @@ export default function SubmitComplaint() {
                   <SelectTrigger id="complaintType">
                     <SelectValue placeholder="Select complaint type" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-slate-800 text-white">
                     <SelectItem value="Service Not Available">Excessive Black Smoke</SelectItem>
                     <SelectItem value="Poor Quality of Service">Strong Fuel Smell</SelectItem>
                     <SelectItem value="Delay in Service">Leaking Oil</SelectItem>

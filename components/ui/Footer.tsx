@@ -14,10 +14,6 @@ const Footer = () => {
               This tool is for informational purposes only and is not a substitute for professional medical advice.
             </p>
           </div>
-          <div className="flex items-center">
-            <span className="text-sm mr-2">Made with</span>
-            <Heart size={16} className="text-red-500" />
-          </div>
         </div>
       </div>
     </footer>
