@@ -6,9 +6,9 @@ import Image from 'next/image';
 
 export default function Home() {
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto  px-4 py-8 pt-1">
      {/* Nepali Government Header */}
-<div className="flex justify-between items-center py-4 border-b border-gray-300 mb-8">
+<div className="md:w-4/5 mx-auto flex justify-between items-center pt-0 py-4 border-b border-gray-300 mb-8">
   {/* Left: Government Emblem */}
  
 
@@ -111,25 +111,6 @@ export default function Home() {
           ))}
         </div>
       </div>
-
-      {/* Footer */}
-      <footer className="text-center text-sm text-muted-foreground mt-12">
-        <p>© {new Date().getFullYear()} E-Governance Citizen Complaint Portal. All rights reserved.</p>
-        <div className="flex justify-center gap-4 mt-2">
-          <Link href="/about" className="hover:underline">
-            About
-          </Link>
-          <Link href="/contact" className="hover:underline">
-            Contact
-          </Link>
-          <Link href="/privacy" className="hover:underline">
-            Privacy Policy
-          </Link>
-          <Link href="/terms" className="hover:underline">
-            Terms of Service
-          </Link>
-        </div>
-      </footer>
     </div>
   )
 }
