@@ -146,15 +146,18 @@ export default function SubmitComplaint() {
                 <div className="space-y-2">
                   <Label htmlFor="phone">Phone Number</Label>
                   <Input
-                  
                     id="phone"
                     placeholder="Your contact number"
                     value={formData.phone}
-                    onChange={handleChange}
+                    onChange={(e) => {
+                      const numericValue = e.target.value.replace(/\D/g, "");
+                      setFormData((prev) => ({ ...prev, phone: numericValue }));
+                    }}
+                    inputMode="numeric"
+                    pattern="[0-9]*"
                     required
                   />
                 </div>
-                
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -221,11 +224,11 @@ export default function SubmitComplaint() {
                     <SelectValue placeholder="Select complaint type" />
                   </SelectTrigger>
                   <SelectContent className="bg-slate-800 text-white">
-                    <SelectItem value="Service Not Available">Excessive Black Smoke</SelectItem>
-                    <SelectItem value="Poor Quality of Service">Strong Fuel Smell</SelectItem>
-                    <SelectItem value="Delay in Service">Leaking Oil</SelectItem>
+                    <SelectItem value="Excessive Black Smok">Excessive Black Smoke</SelectItem>
+                    <SelectItem value="Strong Fuel smell">Strong Fuel Smell</SelectItem>
+                    <SelectItem value="Leaking Oil">Leaking Oil</SelectItem>
                     <SelectItem value="Staff Behavior">Staff Behavior</SelectItem>
-                    <SelectItem value="Corruption">Noise Pollution</SelectItem>
+                    <SelectItem value="Noise Pollution">Noise Pollution</SelectItem>
                     <SelectItem value="Other">Other</SelectItem>
                   </SelectContent>
                 </Select>
